@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { fetchFilms } from "../../redux/reducer/Film/actions";
-import { fetchCharacters } from "../../redux/reducer/Character/actions";
+import { fetchCharacters, setPaginate } from "../../redux/reducer/Character/actions";
 // import styled from "styled-components";
 import FilmType from "./types";
 
@@ -14,7 +14,7 @@ const FilmSelector = (props: FilmType) => {
 
     useEffect(() => {
         props.fetchFilms();
-    }, [fetchFilms]);
+    }, [props.fetchFilms]);
 
     return (
         <Form>
@@ -37,10 +37,10 @@ const FilmSelector = (props: FilmType) => {
 const mapDispatch = {
     fetchFilms,
     fetchCharacters,
+    setPaginate,
 };
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         film: state.filmReducer.films,
         loading: state.filmReducer.loading,

@@ -11,7 +11,7 @@ const initialState = {
 };
 
 // Reducer
-const FilmsReducer = (state = initialState, action) => {
+const filmReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_FILMS_BEGIN:
             return {
@@ -38,4 +38,4 @@ const FilmsReducer = (state = initialState, action) => {
     }
 };
 
-export default FilmsReducer;
+export default filmReducer;

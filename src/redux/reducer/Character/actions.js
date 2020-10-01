@@ -1,4 +1,10 @@
 import axios from "axios";
+import {
+    setCurrentPage,
+    setIndexOfFirstCharacter,
+    setIndexOfLastCharacter,
+    setCurrentCharacter
+} from "./pagination"
 
 export function fetchCharacters(data) {
     return (dispatch) => {
@@ -14,10 +20,19 @@ export function fetchCharacters(data) {
         });
 
         Promise.all(request).then(() => {
-            dispatch(fetchCharactersSuccess(characters))    
-        })
-
+            dispatch(fetchCharactersSuccess(characters));
+            dispatch(setPaginate(1))
+        });
     };
+}
+
+export function setPaginate(number) {
+    return (dispatch) => {
+        dispatch(setCurrentPage(number))
+        dispatch(setIndexOfLastCharacter())
+        dispatch(setIndexOfFirstCharacter())
+        dispatch(setCurrentCharacter())
+    }
 }
 
 export const fetchCharactersBegin = () => ({
@@ -34,6 +49,8 @@ export const fetchCharactersFailure = (error) => ({
     payload: { error },
 });
 
+
 export const FETCH_CHARACTERS_BEGIN = "FETCH_CHARACTERS_BEGIN";
 export const FETCH_CHARACTERS_SUCCESS = "FETCH_CHARACTERS_SUCCESS";
 export const FETCH_CHARACTERS_FAILURE = "FETCH_CHARACTERS_FAILURE";
+

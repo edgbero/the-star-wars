@@ -4,14 +4,26 @@ import {
     FETCH_CHARACTERS_FAILURE,
 } from "../Character/actions";
 
+import {
+    SET_CURRENT_PAGE,
+    SET_INDEX_OF_LAST_CHARACTER,
+    SET_INDEX_OF_FIRST_CHARACTER,
+    SET_CURRENT_CHARACTER,
+} from "../Character/pagination";
+
 const initialState = {
     loading: false,
     error: null,
     characters: [],
+    currentCharacter: [],
+    currentPage: 1,
+    indexOfLastCharacter: 1,
+    indexOfFirstCharacter: 0,
+    characterPerPage: 1,
 };
 
 // Reducer
-const CharactersReducer = (state = initialState, action) => {
+const characterReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_CHARACTERS_BEGIN:
             return {
@@ -32,9 +44,34 @@ const CharactersReducer = (state = initialState, action) => {
                 error: action.payload.error,
                 characters: [],
             };
+        case SET_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.payload.index,
+            };
+        case SET_INDEX_OF_LAST_CHARACTER:
+            return {
+                ...state,
+                indexOfLastCharacter:
+                    state.currentPage * state.characterPerPage,
+            };
+        case SET_INDEX_OF_FIRST_CHARACTER:
+            return {
+                ...state,
+                indexOfFirstCharacter:
+                    state.indexOfLastCharacter - state.characterPerPage,
+            };
+        case SET_CURRENT_CHARACTER:
+            return {
+                ...state,
+                currentCharacter: state.characters.slice(
+                    state.indexOfFirstCharacter,
+                    state.indexOfLastCharacter
+                ),
+            };
         default:
             return state;
     }
 };
 
-export default CharactersReducer;
+export default characterReducer;
