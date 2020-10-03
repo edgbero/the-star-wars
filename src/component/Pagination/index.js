@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { PaginationType } from "./types";
 
 const StyledUl = styled.nav`
     margin-bottom: 75px;
@@ -18,12 +19,18 @@ const StyledUl = styled.nav`
     }
 
     .page-link {
-        border: 1px solid #333;
         color: #333;
+    }
+
+    .page-item {
+        &:hover,
+        &:active {
+            cursor: pointer;
+        }
     }
 `;
 
-const Pagination = ({ characterPerPage, totalCharacter, paginate }) => {
+const Pagination = ({ characterPerPage, totalCharacter, paginate }: PaginationType) => {
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalCharacter / characterPerPage); i++) {
@@ -35,7 +42,12 @@ const Pagination = ({ characterPerPage, totalCharacter, paginate }) => {
             <ul className="pagination">
                 {pageNumbers.map((number) => (
                     <li key={number} className="page-item">
-                        <div className="page-link" onClick={() => paginate(number)}>{number}</div>
+                        <div
+                            className="page-link"
+                            onClick={() => paginate(number)}
+                        >
+                            {number}
+                        </div>
                     </li>
                 ))}
             </ul>

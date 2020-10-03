@@ -1,3 +1,5 @@
+import { FilmType } from './types';
+
 import {
     FETCH_FILMS_BEGIN,
     FETCH_FILMS_SUCCESS,
@@ -11,7 +13,7 @@ const initialState = {
 };
 
 // Reducer
-const filmReducer = (state = initialState, action) => {
+const filmReducer = (state = initialState, action : FilmType) => {
     switch (action.type) {
         case FETCH_FILMS_BEGIN:
             return {

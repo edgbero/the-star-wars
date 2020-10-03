@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export function fetchFilms() {
+export function fetchFilms(a) {
     return dispatch => {
         dispatch(fetchFilmsBegin());
         return axios.get('https://swapi.dev/api/films/')

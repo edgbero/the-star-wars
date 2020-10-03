@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { fetchFilms } from "../../redux/reducer/Film/actions";
-import { fetchCharacters, setPaginate } from "../../redux/reducer/Character/actions";
-// import styled from "styled-components";
+import { fetchCharacters, setPaginate, searchCharacter } from "../../redux/reducer/Character/actions";
 import FilmType from "./types";
 
 const FilmSelector = (props: FilmType) => {
@@ -19,8 +18,8 @@ const FilmSelector = (props: FilmType) => {
     return (
         <Form>
             <Form.Group controlId="formGridState">
-                <Form.Control as="select" onChange={setFilm}>
-                    <option>Choose..</option>
+                <Form.Control as="select" onChange={setFilm} defaultValue={'default'}>
+                    <option disabled value="default">Select the film series</option>
                     {props.film.map((film, index) => {
                         return (
                             <option key={index} value={index}>
@@ -38,6 +37,7 @@ const mapDispatch = {
     fetchFilms,
     fetchCharacters,
     setPaginate,
+    searchCharacter,
 };
 
 const mapStateToProps = (state) => {

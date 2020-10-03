@@ -1,3 +1,5 @@
+import { CharacterType } from "./types";
+
 import {
     FETCH_CHARACTERS_BEGIN,
     FETCH_CHARACTERS_SUCCESS,
@@ -23,7 +25,7 @@ const initialState = {
 };
 
 // Reducer
-const characterReducer = (state = initialState, action) => {
+const characterReducer = (state = initialState, action : CharacterType) => {
     switch (action.type) {
         case FETCH_CHARACTERS_BEGIN:
             return {
