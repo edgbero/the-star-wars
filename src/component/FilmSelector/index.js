@@ -3,9 +3,8 @@ import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFilms } from "../../redux/reducer/Film/actions";
 import { fetchCharacters } from "../../redux/reducer/Character/actions";
-import FilmType from "./types";
 
-const FilmSelector = (props: FilmType) => {
+const FilmSelector = () => {
     const dispatch = useDispatch();
     const films = useSelector(state => state.filmReducer.films);
     const loading = useSelector(state => state.filmReducer.loading);

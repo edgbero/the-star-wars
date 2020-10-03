@@ -2,7 +2,6 @@ import React, { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import { Card, Table, Row } from "react-bootstrap";
 import styled from "styled-components";
-
 import PopupStarship from "../PopupStarship";
 import LabelNotFound from "../LabelNotFound";
 import { CharacterType, CharacterDescType } from "./types";
@@ -111,7 +110,7 @@ const CharacterDesc = ({ character, toggleActive }: CharacterDescType) => {
                     <ScrollingWrapper>
                         {character.starships.map((starship, index) => {
                             return (
-                                <StyledStarship
+                                <StyledStarship 
                                     key={index}
                                     onClick={() => toggleActive(starship)}
                                 >
@@ -129,7 +128,7 @@ const CharacterDesc = ({ character, toggleActive }: CharacterDescType) => {
     );
 };
 
-const Character = (props: CharacterType) => {
+const Character = () => {
     const [isActive, setActive] = useState(false);
     const [starship, setStarship] = useState([]);
     const currentCharacter = useSelector((state) => state.characterReducer.currentCharacter);

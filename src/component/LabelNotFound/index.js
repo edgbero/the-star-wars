@@ -9,7 +9,7 @@ const LabelNotFoundComponent = styled.label`
     text-align: center;
 `;
 
-const LabelNotFound = ({text}) => {
+const LabelNotFound = ({text} : any) => {
     return <LabelNotFoundComponent>{text}</LabelNotFoundComponent>;
 };
 

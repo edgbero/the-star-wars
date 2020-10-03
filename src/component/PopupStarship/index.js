@@ -19,6 +19,11 @@ const customStyles = {
 const StyledButton = styled(Button)`
     width: 100%;
     margin-top: 15px;
+    background: #2f4f4f;
+
+    &:hover, &:active {
+        background: #396161;
+    }
 `;
 
 const StyledTable = styled(Table)`
@@ -34,7 +39,7 @@ const StyledTable = styled(Table)`
     
 
     .rating {
-        background: #326ba8;
+        background: #2f4f4f;
         color: #ffffff;
         margin: 0px;
         padding: 7px;
@@ -98,7 +103,7 @@ const PopupStarship = ({ starship, isActive, setActive }: PopupStarshipType) => 
                     </tr>
                 </tbody>
             </StyledTable>
-            <StyledButton variant="dark" onClick={() => setActive(false)}>Close</StyledButton>
+            <StyledButton onClick={() => setActive(false)}>Close</StyledButton>
         </Modal>
     );
 };

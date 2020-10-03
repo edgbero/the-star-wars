@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { searchCharacter } from "../../redux/reducer/Character/actions";
-import { CharacterSearchType } from "./types";
 
-const CharacterSearch = (props: CharacterSearchType) => {
+const CharacterSearch = () => {
     const dispatch = useDispatch();
     const [name, setName] = useState("");
     const characters = useSelector(state => state.characterReducer.characters)

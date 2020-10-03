@@ -8,7 +8,7 @@ const LoadingComponent = styled.div`
         margin: 20.4rem auto;
         border-radius: 50%;
         border: 0.3rem solid #d6d6d6;
-        border-top-color: #333333;
+        border-top-color: #2f4f4f;
         animation: 1.5s spin infinite linear;
     
     @keyframes spin {
