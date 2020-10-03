@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { searchCharacter } from "../../redux/reducer/Character/actions";
 import { CharacterSearchType } from "./types";
 
 const CharacterSearch = (props: CharacterSearchType) => {
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
+    const characters = useSelector(state => state.characterReducer.characters)
+
     const handleChangeName = (e) => {
-        setName(e.target.value)
+        setName(e.target.value);
     }
-    
+
     const search = () => {
-        props.searchCharacter(name);
+        dispatch(searchCharacter(name, characters))
     }
 
     return (
@@ -33,8 +36,4 @@ const CharacterSearch = (props: CharacterSearchType) => {
     );
 };
 
-const mapDispatch = {
-    searchCharacter,
-};
-
-export default connect(null, mapDispatch) (CharacterSearch);
+export default CharacterSearch;

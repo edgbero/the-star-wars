@@ -1,12 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Card, Table, Row } from "react-bootstrap";
 import styled from "styled-components";
 
-import { setPaginate } from "../../redux/reducer/Character/actions";
-import Pagination from "../Pagination";
 import PopupStarship from "../PopupStarship";
-import Loading from "../Loading";
 import LabelNotFound from "../LabelNotFound";
 import { CharacterType, CharacterDescType } from "./types";
 
@@ -110,7 +107,6 @@ const CharacterDesc = ({ character, toggleActive }: CharacterDescType) => {
                 </StyledTable>
 
                 <Card.Title className="mt-5">Starships</Card.Title>
-
                 {character.starships.length !== 0 && (
                     <ScrollingWrapper>
                         {character.starships.map((starship, index) => {
@@ -125,11 +121,9 @@ const CharacterDesc = ({ character, toggleActive }: CharacterDescType) => {
                         })}
                     </ScrollingWrapper>
                 )}
-
                 {character.starships.length === 0 && (
                     <LabelNotFound text="No Starship" />
                 )}
-
             </Card.Body>
         </StyledCard>
     );
@@ -138,52 +132,26 @@ const CharacterDesc = ({ character, toggleActive }: CharacterDescType) => {
 const Character = (props: CharacterType) => {
     const [isActive, setActive] = useState(false);
     const [starship, setStarship] = useState([]);
+    const currentCharacter = useSelector((state) => state.characterReducer.currentCharacter);
 
     const toggleActive = (starship) => {
         setActive(!isActive);
         setStarship(starship);
     };
 
-    const paginate = (number) => {
-        props.setPaginate(number);
-    };
-
-    if (props.loading) return <Loading />;
-    else if (props.currentCharacter && props.currentCharacter.length !== 0) {
-        return (
-            <Fragment>
-                <CharacterDesc
-                    character={props.currentCharacter[0]}
-                    toggleActive={toggleActive}
-                />
-                <Pagination
-                    totalCharacter={props.totalCharacter}
-                    characterPerPage={props.characterPerpage}
-                    paginate={paginate}
-                />
-                <PopupStarship
-                    starship={starship}
-                    isActive={isActive}
-                    setActive={setActive}
-                ></PopupStarship>
-            </Fragment>
-        );
-    }
-    return false;
+    return (
+        <Fragment>
+            <CharacterDesc
+                character={currentCharacter[0]}
+                toggleActive={toggleActive}
+            />
+            <PopupStarship
+                starship={starship}
+                isActive={isActive}
+                setActive={setActive}
+            ></PopupStarship>
+        </Fragment>
+    );
 };
 
-const mapDispatch = {
-    setPaginate,
-};
-
-const mapStateToProps = (state) => {
-    return {
-        characterPerpage: state.characterReducer.characterPerPage,
-        totalCharacter: state.characterReducer.characters.length,
-        currentCharacter: state.characterReducer.currentCharacter,
-        loading: state.characterReducer.loading,
-        error: state.characterReducer.error,
-    };
-};
-
-export default connect(mapStateToProps, mapDispatch)(Character);
+export default Character;

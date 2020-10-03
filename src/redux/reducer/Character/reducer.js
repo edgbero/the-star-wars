@@ -4,6 +4,7 @@ import {
     FETCH_CHARACTERS_BEGIN,
     FETCH_CHARACTERS_SUCCESS,
     FETCH_CHARACTERS_FAILURE,
+    FETCH_DISPLAYED_CHARACTERS,
 } from "../Character/actions";
 
 import {
@@ -17,6 +18,7 @@ const initialState = {
     loading: false,
     error: null,
     characters: [],
+    displayedCharacters: [],
     currentCharacter: [],
     currentPage: 1,
     indexOfLastCharacter: 1,
@@ -46,6 +48,11 @@ const characterReducer = (state = initialState, action : CharacterType) => {
                 error: action.payload.error,
                 characters: [],
             };
+        case FETCH_DISPLAYED_CHARACTERS:
+            return {
+                ...state,
+                displayedCharacters : action.payload.data,
+            }
         case SET_CURRENT_PAGE:
             return {
                 ...state,
@@ -66,7 +73,7 @@ const characterReducer = (state = initialState, action : CharacterType) => {
         case SET_CURRENT_CHARACTER:
             return {
                 ...state,
-                currentCharacter: state.characters.slice(
+                currentCharacter: state.displayedCharacters.slice(
                     state.indexOfFirstCharacter,
                     state.indexOfLastCharacter
                 ),

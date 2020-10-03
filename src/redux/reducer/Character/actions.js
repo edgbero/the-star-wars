@@ -21,7 +21,7 @@ export function fetchCharacters(data) {
                     const homeworldAPI = res.data.homeworld;
                     const starshipsAPI = res.data.starships;
 
-                    // get homeworld
+                    // fetch homeworld
                     axios
                         .get(homeworldAPI)
                         .then((response) => {
@@ -29,7 +29,7 @@ export function fetchCharacters(data) {
                         })
                         .catch((e) => dispatch(fetchCharactersFailure(e)));
 
-                    // get starship
+                    // fetch starship
                     if (starshipsAPI.length) {
                         starshipsAPI.map((starshipAPI) => {
                             return axios
@@ -42,8 +42,6 @@ export function fetchCharacters(data) {
                                 );
                         });
                     }
-
-                    console.log(tempCharacter)
                     characters.push(tempCharacter);
                 })
                 .catch((e) => dispatch(fetchCharactersFailure(e)));
@@ -51,6 +49,7 @@ export function fetchCharacters(data) {
 
         Promise.all(request).then(() => {
             dispatch(fetchCharactersSuccess(characters));
+            dispatch(fetchDisplayedCharacters(characters))
             dispatch(setPaginate(1));
         });
     };
@@ -65,52 +64,15 @@ export function setPaginate(number) {
     };
 }
 
-export function searchCharacter(data) {
+export function searchCharacter(name, characters) {
     return (dispatch) => {
-        dispatch(fetchCharactersBegin());
-        const characters = [];
-        axios
-            .get("https://swapi.dev/api/people/?search=" + data)
-            .then((res) => {
-                const dataCharacter = res.data.results;
-                const request = dataCharacter.map((character) => {
-                    let tempCharacter = {
-                        ...character,
-                        starships: [],
-                    };
-                    const homeworldAPI = character.homeworld;
-                    const starshipsAPI = character.starships;
-
-                    // // get homeworld
-                    axios
-                        .get(homeworldAPI)
-                        .then((response) => {
-                            tempCharacter.homeworld = response.data.name;
-                        })
-                        .catch((e) => dispatch(fetchCharactersFailure(e)));
-
-                    // // get starship
-                    if (starshipsAPI.length) {
-                        starshipsAPI.map((starshipAPI) => {
-                            return axios
-                                .get(starshipAPI)
-                                .then((res) => {
-                                    tempCharacter.starships.push(res.data);
-                                })
-                                .catch((e) =>
-                                    dispatch(fetchCharactersFailure(e))
-                                );
-                        });
-                    }
-                    characters.push(tempCharacter);
-                });
-
-                Promise.all(request).then(() => {
-                    dispatch(fetchCharactersSuccess(characters));
-                    dispatch(setPaginate(1));
-                });
-            })
-            .catch((e) => dispatch(fetchCharactersFailure(e)));
+        const filteredCharacter = characters.filter((character) => {
+            return (
+                character.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+            );
+        });
+        dispatch(fetchDisplayedCharacters(filteredCharacter));
+        dispatch(setPaginate(1));
     };
 }
 
@@ -128,6 +90,12 @@ export const fetchCharactersFailure = (error) => ({
     payload: { error },
 });
 
+export const fetchDisplayedCharacters = (data) => ({
+    type: FETCH_DISPLAYED_CHARACTERS,
+    payload: { data },
+})
+
 export const FETCH_CHARACTERS_BEGIN = "FETCH_CHARACTERS_BEGIN";
 export const FETCH_CHARACTERS_SUCCESS = "FETCH_CHARACTERS_SUCCESS";
 export const FETCH_CHARACTERS_FAILURE = "FETCH_CHARACTERS_FAILURE";
+export const FETCH_DISPLAYED_CHARACTERS = "FETCH_DISPLAYED_CHARACTERS";
