@@ -14,7 +14,6 @@ class Home extends Component {
                 <Container>
                     <Switch>
                         <Route path="/" exact component={Main} />
-                        {/* <Route path="/news" component={Newsletter} /> */}
                     </Switch>
                 </Container>
             </BrowserRouter>
