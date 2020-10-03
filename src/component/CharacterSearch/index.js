@@ -27,8 +27,8 @@ const CharacterSearch = () => {
                         onChange={handleChangeName}
                     />
                 </Col>
-                <Col>
-                    <Button variant="dark" onClick={search}>Search</Button>
+                <Col lg={2}>
+                    <Button variant="dark" onClick={search} block>Search</Button>
                 </Col>
             </Row>
         </Form>
